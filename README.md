@@ -6,3 +6,5 @@ node server.js
 Start the frontend:
 cd frontend
 npm start
+
+frontend repo: https://github.com/shrungpatel/frontend
