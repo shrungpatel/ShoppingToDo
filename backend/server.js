@@ -6,24 +6,20 @@ const productRoutes = require('./routes/productRoutes');
 const app = express();
 const port = 5000;
 
-// Middleware
+require('dotenv').config();
+
 app.use(cors({
-  origin: 'http://localhost:3000',  // This allows requests from localhost:3000 only
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],  // Allow specific HTTP methods
-  allowedHeaders: ['Content-Type', 'Authorization'],  // Specify allowed headers
+  origin: 'http://localhost:3000',  // allows requests from port 3000 only
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 app.use(express.json());
 
-// MongoDB connection
-/*mongoose.connect('mongodb+srv://shrungkpatel:MqZAtTs02En9IzRw@stage2.selrg.mongodb.net/?retryWrites=true&w=majority&appName=Stage2', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));*/
 
-mongoose.connect('mongodb+srv://shrungkpatel:MqZAtTs02En9IzRw@stage2.selrg.mongodb.net/?retryWrites=true&w=majority&appName=Stage2', { useNewUrlParser: true, useUnifiedTopology: true })
+const mongoURI = process.env.MONGO_URI;
+//console.log("The URI is " + mongoURI);
+mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 .then(() => console.log('MongoDB connected'))
-.catch(err => {
-  console.error('MongoDB connection error:', err);
-});
+.catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/products', productRoutes);

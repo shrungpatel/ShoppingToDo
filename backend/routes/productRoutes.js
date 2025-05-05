@@ -48,8 +48,8 @@ router.get('/search', async (req, res) => {
 // Delete a product by ID
 router.delete('/:id', async (req, res) => {
   try {
-    const { id } = req.params; // Get the product ID from the URL
-    const deleted = await Product.findByIdAndDelete(id); // Delete product by ID
+    const { id } = req.params;
+    const deleted = await Product.findByIdAndDelete(id);
     if (!deleted) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -59,5 +59,23 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
+
+router.put('/update/:id', async (req, res) => {
+  const { id } = req.params;
+  const { productName, storeName } = req.body;
+  console.log(productName + " " + storeName);
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(id,
+      { productName: productName, storeName: storeName },
+      { new: true });
+    if (!updatedProduct) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    console.error('An error updating product:', error);
+    res.status(500).json({ message: 'Something went wrong while updating the product' });
+  }
+});
 
 module.exports = router;
