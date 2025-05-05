@@ -11,6 +11,8 @@ const productSchema = new mongoose.Schema({
   }
 });
 
+productSchema.index({ storeName: 1 });
+
 const Product = mongoose.model('Product', productSchema);
 
 module.exports = Product;
