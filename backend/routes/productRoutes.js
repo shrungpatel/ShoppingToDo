@@ -4,10 +4,10 @@ const router = express.Router();
 
 // Add a new product
 router.post('/add', async (req, res) => {
-  const { productName, storeName } = req.body;
+  const { productName, storeName, quantity } = req.body;
 
   try {
-    const newProduct = new Product({productName, storeName});
+    const newProduct = new Product({productName, storeName, quantity});
     await newProduct.save();
     res.status(201).json(newProduct);
   }
@@ -58,11 +58,11 @@ router.delete('/:id', async (req, res) => {
 
 router.put('/update/:id', async (req, res) => {
   const { id } = req.params;
-  const { productName, storeName } = req.body;
+  const { productName, storeName, quantity } = req.body;
   console.log(productName + " " + storeName);
   try {
     const updatedProduct = await Product.findByIdAndUpdate(id,
-      { productName: productName, storeName: storeName },
+      { productName: productName, storeName: storeName, quantity: quantity },
       { new: true });
     if (!updatedProduct) {
       return res.status(404).json({ message: 'Product not found' });

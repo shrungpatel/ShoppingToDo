@@ -8,9 +8,13 @@ const productSchema = new mongoose.Schema({
   storeName: {
     type: String,
     required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true
   }
 });
-
+// creates an index on the store name
 productSchema.index({ storeName: 1 });
 
 const Product = mongoose.model('Product', productSchema);
