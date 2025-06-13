@@ -75,4 +75,8 @@ router.put('/update/:id', async (req, res) => {
   }
 });
 
+router.get('/reccomended', async (req, res) => {
+  // reccomendation api endpoint
+});
+
 module.exports = router;
